@@ -13,17 +13,21 @@
     
      <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" />
      
-      <!-- Font Awesome Icons -->
-     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
      
      <link href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-  
-     <link href="{{ asset('plugins/datatables-buttons/css/buttons.dataTables.min.css') }}" rel="stylesheet"/>
+     
      
      <link href="{{ asset('plugins/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
      
+     <link href="{{ asset('plugins/datatables-buttons/css/buttons.dataTables.min.css') }}" rel="stylesheet"/>
+     
      <link href="{{ asset('plugins/datatables/css/responsive.dataTables.min.css') }}" rel="stylesheet"/>
      
+      <!-- Font Awesome Icons -->
+     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    
+     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/font-awesome.min.css') }}">
+    
       <!-- Styles -->
       <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
