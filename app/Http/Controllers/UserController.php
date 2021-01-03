@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use App\Http\Requests\UserFormRequest;
 use App\Http\Requests\UserEditFormRequest;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -22,16 +25,20 @@ class UserController extends Controller
        
         if($request->ajax()){
             
-            $users = User::all();
+           /*  $users = User::all(); */
+            
+            $users = DB::table('users')
+            ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol"))
+            ->get();
             
             return DataTables::of($users)
-            ->addColumn('rol', function($user){
+           /*  ->addColumn('rol', function($user){
                 
                 foreach($user->roles as $role){
                     return $role->name;
                 }
                 
-            })
+            }) */
             
             ->addColumn('imagen', function($user){
                 
@@ -40,8 +47,6 @@ class UserController extends Controller
                     return '';
                      
                 }
-                
-               
                 
                     return '<img src="'.asset('imagenes/'.$user->imagen).'" width="50" height="50" />';
                 
