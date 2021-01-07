@@ -29,6 +29,7 @@
 
 </div>
 
+<script src="{{ asset('js/usuarios.js') }}"></script>
 
 @endsection
 

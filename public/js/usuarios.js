@@ -96,7 +96,8 @@ $(function(){
           }
         }]
       }, 
-      ajax: "{{ route('usuarios.index')}}",
+      ajax: "../../public/index.php/usuarios",
+      /*  ajax: "{{ route('usuarios.index')}}", */
       columns: [
         
       
