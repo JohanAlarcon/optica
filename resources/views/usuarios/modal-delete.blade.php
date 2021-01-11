@@ -6,13 +6,13 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+          <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-exclamation-triangle"></i> &emsp;Eliminar usuario</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          ¿ Estas seguro que quieres eliminarlo ?
+         ¿ Estas seguro que quieres eliminarlo ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

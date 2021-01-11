@@ -20,52 +20,54 @@ class UserController extends Controller
         
     }
     
-    public function index(Request $request)
-    {
-       
-        if($request->ajax()){
+    public function showTable(){
             
            /*  $users = User::all(); */
             
-            $users = DB::table('users')
-            ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol"))
-            ->get();
-            
-            return DataTables::of($users)
-           /*  ->addColumn('rol', function($user){
-                
-                foreach($user->roles as $role){
-                    return $role->name;
-                }
-                
-            }) */
-            
-            ->addColumn('imagen', function($user){
-                
-                if(empty($user->imagen)){
+           $users = DB::table('users')
+           ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol"))
+           ->get();
+           
+           return DataTables::of($users)
+          /*  ->addColumn('rol', function($user){
+               
+               foreach($user->roles as $role){
+                   return $role->name;
+               }
+               
+           }) */
+           
+           ->addColumn('imagen', function($user){
+               
+               if(empty($user->imagen)){
+                   
+                   return '';
                     
-                    return '';
-                     
-                }
-                
-                    return '<img src="'.asset('imagenes/'.$user->imagen).'" width="50" height="50" />';
-                
-            })
+               }
+               
+                   return '<img src="'.asset('imagenes/'.$user->imagen).'" width="50" height="50" />';
+               
+           })
+           
+           ->addColumn('action', 'usuarios.actions')
+           ->rawColumns(['imagen','action'])
+           ->make(true);
+        
+    }
+    
+    public function index(Request $request)
+    {
+       
+        $roles = Role::all();
+        
+        if($request->ajax()){
             
-            ->addColumn('action', 'usuarios.actions')
-            ->rawColumns(['imagen','action'])
-            ->make(true);
-                
+           return $this->showTable();
+        
         } 
         
-        return view('usuarios.index');
+        return view('usuarios.index',['roles'=>$roles,'action'=>url('usuarios')]);
      
-    }
-
-    public function create()
-    {
-        $roles = Role::all();
-        return view('usuarios.create',['roles'=>$roles]);
     }
 
    
@@ -92,24 +94,25 @@ class UserController extends Controller
         
         $usuario->asignarRol($request->get('rol'));
         
-        return redirect('/usuarios');
+        return redirect('/usuarios')->with('message','Usuario registrado con exito'); 
     }
 
-    
-    public function show($id)
-    {
-        
-        return view('usuarios.show', ['user'=>User::findOrFail($id)] );
-        
-    }
 
-    public function edit($id)
+
+    public function edit($id,Request $request)
     {
         
        $user  = User::findOrFail($id);
-       $roles = Role::all();
+       $roles = Role::all(); 
        
-       return view('usuarios.edit', ['user'=>$user,'roles'=>$roles] );
+      if($request->ajax()){
+            
+           return $this->showTable();
+        
+       } 
+       
+       return view('usuarios.index', ['user'=>$user,'roles'=>$roles,'action'=>route('usuarios.update',$user->id)] );
+       
     }
 
    
@@ -171,7 +174,9 @@ class UserController extends Controller
        
        $usuario->update();
        
-       return redirect('/usuarios');
+       return redirect('/usuarios')->with('message','Usuario actualizado con exito');
+       
+       
     }
 
   
@@ -181,7 +186,7 @@ class UserController extends Controller
        
        $usuario->delete();
        
-       return redirect('/usuarios');
+       return redirect('/usuarios')->with('message','Usuario eliminado con exito');
        
     }
 }

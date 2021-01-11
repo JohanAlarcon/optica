@@ -96,8 +96,8 @@ $(function(){
           }
         }]
       }, 
-      ajax: "../../public/index.php/usuarios",
-      /*  ajax: "{{ route('usuarios.index')}}", */
+     /*  ajax: "{{ route('usuarios.index')}}", */
+       ajax: "../../../../../../optica/public/index.php/usuarios",
       columns: [
         
       
@@ -162,6 +162,21 @@ $(function(){
         table.draw();
           
       });
+      
+      $('.reset').click( function() {
+       
+        if($("#guardar").attr('disabled')){
+           
+          window.location.href =  $("#usuarios").attr("href");
+        
+        }else{
+          
+          this.form.reset();
+          
+        }
+       
+          
+      });  
     
   });
-    
+ 

@@ -258,7 +258,7 @@
                             @can('administrador')
 
                             <li class="nav-item">
-                            <a href="{{url('usuarios')}}"
+                            <a href="{{url('usuarios')}}" id="usuarios"
                                     class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
