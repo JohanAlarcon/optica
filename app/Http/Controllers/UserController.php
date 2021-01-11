@@ -26,6 +26,7 @@ class UserController extends Controller
             
            $users = DB::table('users')
            ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol"))
+           ->where('deleted_at', '=', NULL)
            ->get();
            
            return DataTables::of($users)
@@ -41,7 +42,7 @@ class UserController extends Controller
                
                if(empty($user->imagen)){
                    
-                   return '';
+                return '<img src="'.asset('imagenes/user-indefinido.png').'" width="50" height="50" />';
                     
                }
                

@@ -224,7 +224,18 @@
                                 @else
                                 
                                 <div class="image">
+                                
+                                @if (Auth::user()->imagen == '')
+                                
+                                
+                                    <img src={{asset('imagenes/user-indefinido.png')}} class="img-circle elevation-2" alt="User Image">
+                                
+                                @else 
+                                
                                     <img src={{asset('imagenes/'.Auth::user()->imagen)}} class="img-circle elevation-2" alt="User Image">
+                                
+                                @endif
+                                
                                 </div>
                                 
                                 {{ Auth::user()->name }}

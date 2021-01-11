@@ -5,16 +5,21 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail 
 {
     use Notifiable;
+    use SoftDeletes; //Implementamos 
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+     
+    protected $dates = ['deleted_at']; //Registramos la nueva columna
+    
     protected $fillable = [
         'name', 'email', 'password',
     ];
