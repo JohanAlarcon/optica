@@ -177,7 +177,9 @@ class UserController extends Controller
        
        $usuario->update();
        
-       return redirect('/usuarios')->with('message','Actualizado con exito');
+       $request->session()->flash('message','Actualizado con exito'); 
+            
+       return $this->index($request);
        
        
     }
