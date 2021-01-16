@@ -23,6 +23,10 @@
      
      <link href="{{ asset('plugins/datatables/css/responsive.dataTables.min.css') }}" rel="stylesheet"/>
      
+     <link href="{{ asset('plugins/datatables/css/responsive.dataTables.min.css') }}" rel="stylesheet"/>
+     
+     <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
+     
       <!-- Font Awesome Icons -->
      <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     
@@ -45,22 +49,21 @@
       
       <script src="{{ asset('js/app.js') }}"></script>
       
-      
-      
-     <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
     
-     <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     
-     <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     
-     <script src="{{ asset('plugins/datatables-buttons/js/buttons.flash.min.js') }}"></script>
-     <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-     <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-     <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-     <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-     <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{  asset('plugins/select2/js/select2.full.min.js') }}"></script>
      
      
      @stack('scripts')
@@ -85,7 +88,7 @@
                     </li>
                 </ul>
 
-                <!-- SEARCH FORM -->
+              {{--   <!-- SEARCH FORM -->
                 <form class="form-inline ml-3">
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search"
@@ -96,7 +99,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
+                </form> --}}
 
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
@@ -239,10 +242,15 @@
                                 </div>
                                 
                                 {{ Auth::user()->name }}
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                           document.getElementById('logout-form').submit();">
-                                    Cerrar Sesión
-                                </a>
+                                <br><br>
+                                <div align="center">
+                                
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt"></i>&emsp;Cerrar Sesión
+                                    </a>
+                                    
+                                </div>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
@@ -288,9 +296,9 @@
                             @can('administrador')
 
                             <li class="nav-item">
-                            <a href="{{url('roles')}}"
+                            <a href="{{url('roles')}}" id="roles"
                                     class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }}">
-                                    <i class="nav-icon fas fa-users"></i>
+                                    <i class="fas fa-user-tag"></i>
                                     <p>Roles</p>
                                 </a>
                             </li>
@@ -353,13 +361,7 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-            <footer class="main-footer">
-                <!-- NO QUITAR -->
-               
-                    <div class="float-right d-none d-sm-inline-block">
-                        <b>Version</b> 1.0
-                    </div>
-            </footer>
+          
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">

@@ -77,9 +77,10 @@ class UserController extends Controller
         
         $usuario = new User();
         
-        $usuario->name    =request('name');
-        $usuario->email   =request('email');
-        $usuario->password=bcrypt(request('password'));
+        $usuario->name                =request('name');
+        $usuario->email               =request('email');
+        $usuario->usuario_registra    = auth()->id();
+        $usuario->password            =bcrypt(request('password'));
        
         if($request->hasFile('imagen')){
             
@@ -95,7 +96,7 @@ class UserController extends Controller
         
         $usuario->asignarRol($request->get('rol'));
         
-        return redirect('/usuarios')->with('message','Usuario registrado con exito'); 
+        return redirect('/usuarios')->with('message','Registrado con exito'); 
     }
 
 
@@ -124,8 +125,9 @@ class UserController extends Controller
         
         $usuario = User::findOrFail($id);
         
-        $usuario->name    =$request->get('name');
-        $usuario->email   =$request->get('email');
+        $usuario->name              = $request->get('name');
+        $usuario->email             = $request->get('email');
+        $usuario->usuario_actualiza = auth()->id();
         
         if($request->hasFile('imagen')){
             
@@ -175,7 +177,7 @@ class UserController extends Controller
        
        $usuario->update();
        
-       return redirect('/usuarios')->with('message','Usuario actualizado con exito');
+       return redirect('/usuarios')->with('message','Actualizado con exito');
        
        
     }
@@ -187,7 +189,7 @@ class UserController extends Controller
        
        $usuario->delete();
        
-       return redirect('/usuarios')->with('message','Usuario eliminado con exito');
+       return redirect('/usuarios')->with('message','Eliminado con exito');
        
     }
 }

@@ -14,6 +14,8 @@ class RolSeeder extends Seeder
     {
         DB::table('roles')->insert([
             'name'       => 'administrador',
+            'usuario_registra' => 1,
+            'descripcion'=> 'acceso y control de todo el sistema',
             'created_at' => NOW()
         ]);
     }

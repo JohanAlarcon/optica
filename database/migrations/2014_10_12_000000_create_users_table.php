@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->bigInteger('usuario_registra')->nullable()->unsigned()->index('user_register_foreign');
+            $table->bigInteger('usuario_actualiza')->nullable()->unsigned()->index('user_update_foreign');
             $table->timestamps();
             $table->softDeletes(); //Nueva línea, para el borrado lógico
         });

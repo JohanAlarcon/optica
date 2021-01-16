@@ -63,7 +63,7 @@
 
             <div class="form-group col-md-6"> 
 
-                <label>Nombre</label>
+                <label>Nombre (*)</label>
                 
                 <input type="text" name="name" class="form-control" value="@if(isset($user)){{$user->name}} @endif"   placeholder="Nombre" required>
 
@@ -71,7 +71,7 @@
 
             <div class="form-group col-md-6">
 
-                <label>Email</label>
+                <label>Email (*)</label>
                 <input type="email" name="email" class="form-control" value="@if(isset($user)){{$user->email}} @endif"  placeholder="Email" required>
 
             </div>
@@ -103,7 +103,7 @@
 
             <div class="form-group col-md-6">
 
-                <label>Rol</label>
+                <label>Rol (*)</label>
                 
                 <select class="form-control" name="rol" required>
                     
