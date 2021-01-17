@@ -16,21 +16,24 @@ class FormsSeeder extends Seeder
         DB::table('forms')->insert([
             'name'  => 'Inicio',
             'href'  => '/',
-            'class' => 'nav-link active',
+            'class' => 'nav-link',
+            'table' => '',
             'icon'  => '<i class="nav-icon fas fa-home"></i>'
         ]);
         
         DB::table('forms')->insert([
             'name'  => 'Usuarios',
             'href'  => 'usuarios',
-            'class' => 'nav-link active',
+            'class' => 'nav-link',
+            'table' => 'users',
             'icon'  => '<i class="nav-icon fas fa-users"></i>'
         ]);
         
         DB::table('forms')->insert([
             'name'  => 'Roles',
             'href'  => 'roles',
-            'class' => 'nav-link active',
+            'class' => 'nav-link',
+            'table' => 'roles',
             'icon'  => '<i class="fas fa-user-tag"></i>'
         ]);
     }

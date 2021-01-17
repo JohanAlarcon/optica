@@ -19,6 +19,7 @@ class CreateFormsTable extends Migration
             $table->string('href');
             $table->string('class');
             $table->string('icon');
+            $table->string('table')->nullable();
             $table->char('state', 1)->default('1')->comment = "0:INACTIVO 1:ACTIVO";
             $table->timestamps();
         });
