@@ -20,23 +20,33 @@ class UserController extends Controller
         
     }
     
+    
+    public function permisosBotones(){
+        
+        $id_formulario = 2; //Usuarios
+        
+        $botones = DB::table('permission_roles')
+        ->select(DB::raw("permission_id"))
+        ->whereRaw('role_id = (SELECT role_id FROM role_user WHERE user_id ='.auth()->id().')')
+        ->where('form_id','=',$id_formulario)
+        ->pluck('permission_id')->toArray();
+        
+        return $botones;
+    }
+    
     public function showTable(){
-            
-           /*  $users = User::all(); */
+        
+           $botones = $this-> permisosBotones();
+        
+            //Posicion del array donde se encuentra la opcion de 'Eliminar'
+           $permissions = !isset($botones[2]) ? '' : $botones[2];   
             
            $users = DB::table('users')
-           ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol"))
+           ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol,'$permissions' AS permissions, 'usuarios' AS ruta"))
            ->where('deleted_at', '=', NULL)
            ->get();
            
            return DataTables::of($users)
-          /*  ->addColumn('rol', function($user){
-               
-               foreach($user->roles as $role){
-                   return $role->name;
-               }
-               
-           }) */
            
            ->addColumn('imagen', function($user){
                
@@ -50,7 +60,7 @@ class UserController extends Controller
                
            })
            
-           ->addColumn('action', 'usuarios.actions')
+           ->addColumn('action', 'actions')
            ->rawColumns(['imagen','action'])
            ->make(true);
         
@@ -59,15 +69,13 @@ class UserController extends Controller
     public function index(Request $request)
     {
        
-        $roles = Role::all();
+        $roles  = Role::all();
         
-        if($request->ajax()){
-            
-           return $this->showTable();
+        $botones = $this-> permisosBotones();
         
-        } 
+        if($request->ajax()) return $this->showTable();
         
-        return view('usuarios.index',['roles'=>$roles,'action'=>url('usuarios')]);
+        return view('usuarios.index',['roles'=>$roles,'botones'=>$botones,'action'=>url('usuarios')]);
      
     }
 
@@ -104,16 +112,13 @@ class UserController extends Controller
     public function edit($id,Request $request)
     {
         
-       $user  = User::findOrFail($id);
-       $roles = Role::all(); 
+       $user    = User::findOrFail($id);
+       $roles   = Role::all(); 
+       $botones = $this-> permisosBotones();
        
-      if($request->ajax()){
-            
-           return $this->showTable();
-        
-       } 
+      if($request->ajax())  return $this->showTable();
        
-       return view('usuarios.index', ['user'=>$user,'roles'=>$roles,'action'=>route('usuarios.update',$user->id)] );
+       return view('usuarios.index', ['user'=>$user,'roles'=>$roles,'botones'=>$botones,'action'=>route('usuarios.update',$user->id)] );
        
     }
 

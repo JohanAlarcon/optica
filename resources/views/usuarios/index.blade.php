@@ -161,10 +161,18 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="btn-group">
+                
+                 @if (in_array(1, $botones))
                     
-                 <button type="submit" id="guardar"    class="btn btn-success" @if(isset($user))disabled @endif><i class="fas fa-save"></i>&emsp;Guardar</button>
+                    <button type="submit" id="guardar"    class="btn btn-success" @if(isset($user))disabled @endif><i class="fas fa-save"></i>&emsp;Guardar</button>
+                 
+                 @endif
+                 
+                @if (in_array(2, $botones))
                   
-                  <button type="submit" id="actualizar" class="btn btn-primary" @if(!isset($user))disabled @endif><i class="far fa-edit"></i>&emsp;Actualizar</button>
+                    <button type="submit" id="actualizar" class="btn btn-primary" @if(!isset($user))disabled @endif><i class="far fa-edit"></i>&emsp;Actualizar</button>
+                  
+                 @endif
                   
                   <button type="button"  class="btn btn-secondary reset"><i class="fas fa-sync"></i>&emsp;Limpiar</button> 
 

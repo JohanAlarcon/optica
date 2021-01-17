@@ -73,7 +73,7 @@
 
                 <label>Descripcion (*)</label>
                 
-                <textarea name="descripcion" id="descripcion" class="form-control" cols="30"  required>@if(isset($role)){{$role->descripcion}} @endif</textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control" cols="30"  placeholder="Descripcion" required>@if(isset($role)){{$role->descripcion}} @endif</textarea>
 
             </div>
 
@@ -81,38 +81,7 @@
         </div>
 
         <div class="row">
-
-            <div class="form-group col-md-6">
-
-                <label>Permisos (*)</label>
-                
-                <select class="form-control select2" multiple="multiple" name="permission[]" required>
-                    
-                   @foreach ($permissions as $permission)
-                   
-                    @if (isset($permissions_selected))
-                    
-                        @if (in_array($permission->id, $permissions_selected))
-                            
-                        <option value="{{$permission->id}}" selected>{{$permission->name}}</option>
-                            
-                        @else
-                        
-                        <option value="{{$permission->id}}">{{$permission->name}}</option>
-                            
-                        @endif
-                        
-                    @else
-                    
-                        <option value="{{$permission->id}}">{{$permission->name}}</option>
-                        
-                    @endif
-                      
-                   @endforeach
-                      
-                  </select>
-
-            </div>
+        
             <div class="form-group col-md-6">
 
                 <label>Formularios (*)</label>
@@ -148,6 +117,38 @@
 
             </div>
 
+            <div class="form-group col-md-6">
+
+                <label>Permisos (*)</label>
+                
+                <select class="form-control select2" multiple="multiple" name="permission[]" required>
+                    
+                   @foreach ($permissions as $permission)
+                   
+                    @if (isset($permissions_selected))
+                    
+                        @if (in_array($permission->id, $permissions_selected))
+                            
+                        <option value="{{$permission->id}}" selected>{{$permission->name}}</option>
+                            
+                        @else
+                        
+                        <option value="{{$permission->id}}">{{$permission->name}}</option>
+                            
+                        @endif
+                        
+                    @else
+                    
+                        <option value="{{$permission->id}}">{{$permission->name}}</option>
+                        
+                    @endif
+                      
+                   @endforeach
+                      
+                  </select>
+
+            </div>
+
 
         </div>
         
@@ -156,10 +157,18 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="btn-group">
+                
+                @if (in_array(1, $botones))
                     
                  <button type="submit" id="guardar"    class="btn btn-success" @if(isset($role))disabled @endif><i class="fas fa-save"></i>&emsp;Guardar</button>
+                
+                @endif
+                
+                @if (in_array(2, $botones))
                   
                   <button type="submit" id="actualizar" class="btn btn-primary" @if(!isset($role))disabled @endif><i class="far fa-edit"></i>&emsp;Actualizar</button>
+                  
+                @endif
                   
                   <button type="button"  class="btn btn-secondary reset"><i class="fas fa-sync"></i>&emsp;Limpiar</button> 
 

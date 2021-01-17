@@ -1,5 +1,7 @@
 $(function(){
          
+    $('[data-toggle="tooltip"]').tooltip();
+  
     $('.select2').select2();
     
     $('.data-table thead tr').clone(true).appendTo( '.data-table thead' );

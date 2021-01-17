@@ -64,9 +64,9 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{  asset('plugins/select2/js/select2.full.min.js') }}"></script>
-     
-     
-     @stack('scripts')
+    
+    
+    @stack('scripts')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -269,7 +269,10 @@
 
                            @php
                             
-                            $forms = DB::table('forms')->get();
+                            $forms = DB::table('forms')
+                            ->where('state', '=', '1')
+                            ->whereRaw('4 IN (SELECT permission_id FROM permission_roles WHERE form_id = forms.id AND role_id = (SELECT role_id FROM role_user WHERE user_id ='.Auth::user()->id.'))')
+                            ->get();
                             
                             foreach ($forms as $form){
                                 

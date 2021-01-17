@@ -24,32 +24,51 @@ class RoleController extends Controller
         
     }
     
+    public function permisosBotones(){
+        
+        $id_formulario = 3; //Roles
+        
+        $botones = DB::table('permission_roles')
+        ->select(DB::raw("permission_id"))
+        ->whereRaw('role_id = (SELECT role_id FROM role_user WHERE user_id ='.auth()->id().')')
+        ->where('form_id','=',$id_formulario)
+        ->pluck('permission_id')->toArray();
+        
+        return $botones;
+    }
     
     public function index(Request $request){
         
-       $permissions = Permission::all();
-       $forms       = Form::all();
+       $permissions   = Permission::all();
+       $forms         = Form::all();
+       
+       $botones = $this-> permisosBotones();
        
        if($request->ajax())  return $this->showTable();
        
-       return view('roles.index',['permissions'=>$permissions,'forms'=>$forms,'action'=>url('roles')]);
+       return view('roles.index',['permissions'=>$permissions,'forms'=>$forms,'botones'=>$botones,'action'=>url('roles')]);
         
     }
     
     public function showTable(){
          
+        $botones = $this-> permisosBotones();
+    
+        //Posicion del array donde se encuentra la opcion de 'Eliminar'
+        $permissions = !isset($botones[2]) ? '' : $botones[2];   
+        
         $roles = DB::table('roles')
-        ->select(DB::raw("id,name, descripcion, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at"))
+        ->select(DB::raw("id,name, descripcion, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at, '$permissions' AS permissions, 'roles' AS ruta,(SELECT GROUP_CONCAT(user_id) FROM role_user WHERE role_id = roles.id) AS user_rol"))
         ->where('deleted_at', '=', NULL)
         ->get();
         
         return DataTables::of($roles)
         
-        ->addColumn('action', 'roles.actions')
+        ->addColumn('action', 'actions')
         ->rawColumns(['imagen','action'])
         ->make(true);
      
- }
+   }
     
     public function saveDetalles($formularios,$permisos,$role_id){
         
@@ -128,11 +147,13 @@ class RoleController extends Controller
             
             $forms_selected      = DB::table('permission_roles')
             ->select(DB::raw("form_id"))
-            ->where('role_id', '=', $id)->groupBy('form_id')->get()->pluck('form_id')->toArray();
+            ->where('role_id', '=', $id)->groupBy('form_id')->pluck('form_id')->toArray();
             
             if($request->ajax()) return $this->showTable();
             
-            return view('roles.index', ['role'=>$role,'permissions'=>$permissions,'forms'=>$forms,'permissions_selected'=>$permissions_selected,'forms_selected'=>$forms_selected,'action'=>route('roles.update',$role->id)] );
+            $botones = $this-> permisosBotones();
+            
+            return view('roles.index', ['role'=>$role,'permissions'=>$permissions,'forms'=>$forms,'permissions_selected'=>$permissions_selected,'botones'=>$botones,'forms_selected'=>$forms_selected,'action'=>route('roles.update',$role->id)] );
         
         } catch (\Throwable $e) {
                 
