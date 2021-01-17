@@ -97,7 +97,7 @@ $(function(){
         }]
       }, 
      /*  ajax: "{{ route('usuarios.index')}}", */
-       ajax: "../../../../../../optica/public/index.php/usuarios",
+       ajax: "../../../../../../plantilla/public/index.php/usuarios",
       columns: [
         
       

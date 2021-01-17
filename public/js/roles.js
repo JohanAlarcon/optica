@@ -101,7 +101,7 @@ $(function(){
         }]
       }, 
      /*  ajax: "{{ route('roles.index')}}", */
-       ajax: "../../../../../../optica/public/index.php/roles",
+       ajax: "../../../../../../plantilla/public/index.php/roles",
       columns: [
         
       
