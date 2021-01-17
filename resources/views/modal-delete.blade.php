@@ -1,7 +1,5 @@
-<!-- Button trigger modal -->
 
-  
-  <!-- Modal para eliminar notas -->
+
   <div class="modal fade" id="delete-{{$id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -17,7 +15,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
           
-          {!! Form::open([ 'action'=> ['RoleController@destroy', $id], 'method' => 'delete' ]) !!}
+          {!! Form::open([ 'action'=> [$controlador."@destroy", $id], 'method' => 'delete' ]) !!}
 
             {{Form::token()}}
 

@@ -42,7 +42,7 @@ class UserController extends Controller
            $permissions = !isset($botones[2]) ? '' : $botones[2];   
             
            $users = DB::table('users')
-           ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol,'$permissions' AS permissions, 'usuarios' AS ruta"))
+           ->select(DB::raw("id,name, email, imagen, password, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at,(SELECT r.name FROM roles r WHERE r.id = (SELECT ru.role_id FROM role_user ru WHERE ru.user_id = users.id)) AS rol,'$permissions' AS permissions, 'usuarios' AS ruta, 'UserController' AS controlador"))
            ->where('deleted_at', '=', NULL)
            ->get();
            
@@ -52,11 +52,11 @@ class UserController extends Controller
                
                if(empty($user->imagen)){
                    
-                return '<img src="'.asset('imagenes/user-indefinido.png').'" width="50" height="50" />';
+                return '<a href="'.asset('imagenes/user-indefinido.png').'" target="_blank"><img src="'.asset('imagenes/user-indefinido.png').'" width="50" height="50" /></a>';
                     
                }
                
-                   return '<img src="'.asset('imagenes/'.$user->imagen).'" width="50" height="50" />';
+                   return '<a href="'.asset('imagenes/'.$user->imagen).'" target="_blank"><img src="'.asset('imagenes/'.$user->imagen).'" width="50" height="50" /></a>';
                
            })
            

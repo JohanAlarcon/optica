@@ -31,7 +31,7 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    <p class="login-box-msg">Inicia sesión para comenzar tu sesión</p>
+                    <p class="login-box-msg">Inicia sesión para comenzar</p>
 
                     <div class="input-group mb-3">
                         <input id="email" type="email" placeholder="Email"
@@ -88,11 +88,6 @@
                             {{ __('¿Olvidaste tu contraseña?') }}
                         </a>
                         @endif
-                    </p>
-                    <p class="mb-0">
-                        <a class="btn btn-link" href="{{ route('register') }}">
-                            {{ __('Registrar un nueva usuario') }}
-                        </a>
                     </p>
 
                 </form>

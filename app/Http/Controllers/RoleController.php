@@ -58,7 +58,7 @@ class RoleController extends Controller
         $permissions = !isset($botones[2]) ? '' : $botones[2];   
         
         $roles = DB::table('roles')
-        ->select(DB::raw("id,name, descripcion, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at, '$permissions' AS permissions, 'roles' AS ruta,(SELECT GROUP_CONCAT(user_id) FROM role_user WHERE role_id = roles.id) AS user_rol"))
+        ->select(DB::raw("id,name, descripcion, DATE_FORMAT(created_at,'%Y-%m-%d') AS created_at, '$permissions' AS permissions, 'roles' AS ruta,'RoleController' AS controlador,(SELECT GROUP_CONCAT(user_id) FROM role_user WHERE role_id = roles.id) AS user_rol"))
         ->where('deleted_at', '=', NULL)
         ->get();
         
